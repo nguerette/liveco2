@@ -34,7 +34,12 @@ const newApp = port => createSimpleServer(port, ({response}) => new Promise(reso
       const slope = (lastValue - secondLastValue) / (lastDate - secondLastDate);
       const currentValueGetterCode = `Number(((Date.now() - ${lastDate.getTime()}) * ${slope}) + ${lastValue})` +
         '.toLocaleString(undefined, {minimumFractionDigits: 8, maximumFractionDigits: 8})';
-      response.setHeader('content-type', 'text/html');
+      response.setHeader('content-type', 'text/html; charset=utf-8');
+      response.setHeader('refresh', String(24 * 60 * 60));
+      response.setHeader('cache-control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+      response.setHeader('expires', '0');
+      response.setHeader('pragma', 'no-cache');
+      response.setHeader('surrogate-control', 'no-store');
       response.write(
         '<!doctype html>\n' +
         '<html lang=en>\n' +
