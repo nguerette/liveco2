@@ -32,7 +32,8 @@ const newApp = port => createSimpleServer(port, ({response}) => new Promise(reso
       }
     }).on('close', () => {
       const slope = (lastValue - secondLastValue) / (lastDate - secondLastDate);
-      const currentValueGetterCode = `Number(((Date.now() - ${lastDate.getTime()}) * ${slope}) + ${lastValue})` +
+      const currentValueGetterExpression =
+        `Number(((Date.now() - ${lastDate.getTime()}) * ${slope}) + ${lastValue})` +
         '.toLocaleString(undefined, {minimumFractionDigits: 8, maximumFractionDigits: 8})';
       response.setHeader('content-type', 'text/html; charset=utf-8');
       response.setHeader('refresh', String(24 * 60 * 60));
@@ -49,7 +50,7 @@ const newApp = port => createSimpleServer(port, ({response}) => new Promise(reso
         '  <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAMFBMVEX///9qCAhXCQlJBwdqCQlKBgZEAgJbAAB9AgJ3HR2tCQm8CwvEDAzpDg7xEhIYFxcuz4idAAAAEHRSTlMAAQQYbrX1+/v6+/n79vv6T3NiHwAAAHlJREFUeAEFwUFSAzEQBDC17ZDaA///aaBIdhopAEm0FUBW0M4BK3LpvOvATr62svM+rORhtpTJyUoOmpZmrVxP+HQanFzJzS2yx853+DzwG9o5xfq5aNGeUhsXr3a2Vd1/B6/pOG1549XeyFoJOjqwC21nCmCtFQD/0PRFO+prkvUAAAAASUVORK5CYII=" />\n' +
         '  <title>Live Atmospheric CO2 Concentration Annualized Average Estimate</title>\n' +
         '  <style type="text/css">\n' +
-        '    p {\n' +
+        '    p:first-of-type {\n' +
         '      position: absolute;\n' +
         '      margin: 0;\n' +
         '      width: 100%;\n' +
@@ -58,29 +59,28 @@ const newApp = port => createSimpleServer(port, ({response}) => new Promise(reso
         '      transform: translateY(-50%);\n' +
         '      font-size: 144px;\n' +
         '    }\n' +
-        '    div {\n' +
+        '    p:last-of-type {\n' +
         '      position: absolute;\n' +
         '      left: 0;\n' +
-        '      top: 100%;\n' +
-        '      transform: translateY(-100%);\n' +
+        '      bottom: 0;\n' +
         '    }\n' +
         '  </style>\n' +
         '  <script type="text/javascript">\n' +
         '    setInterval(function() {\n' +
-        '      let value = ' + currentValueGetterCode + ';\n' +
+        '      let value = ' + currentValueGetterExpression + ';\n' +
         '      document.getElementsByTagName("p")[0].innerText = value + " ppm";\n' +
         '    }, 197);\n' +
         '  </script>\n' +
         '</head>\n' +
         '<body>\n' +
         '<p>&ndash;</p>\n' +
-        '<div>\n' +
+        '<p>\n' +
         `  Based on the last two monthly ${adjFitHeader} data from <a href="${csvUrl}">Keeling et al.</a>\n` +
         '  <sub>&nbsp;</sub><br>\n' +
         '  Further information on changes in atmospheric CO<sub>2</sub> concentration in this\n' +
         '  <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/history.html">NOAA visualization</a>.<br>\n' +
         '  Made for Pivotal hack day 2019 and hosted on <a href="https://run.pivotal.io">Pivotal Web Services</a>.\n' +
-        '</div>\n' +
+        '</p>\n' +
         '</body>\n' +
         '</html>'
       );
