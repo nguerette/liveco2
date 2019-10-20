@@ -40,6 +40,7 @@ const newApp = port => createSimpleServer(port, ({response}) => new Promise(reso
       response.setHeader('expires', '0');
       response.setHeader('pragma', 'no-cache');
       response.setHeader('surrogate-control', 'no-store');
+      response.setHeader('x-powered-by', 'the folly of man');
       response.write(
         '<!doctype html>\n' +
         '<html lang=en>\n' +
@@ -73,10 +74,12 @@ const newApp = port => createSimpleServer(port, ({response}) => new Promise(reso
         '</head>\n' +
         '<body>\n' +
         '<p>&ndash;</p>\n' +
-        `<div>Based on the last two monthly ${adjFitHeader} data from <a href="${csvUrl}">Keeling et al.</a><br>\n` +
+        '<div>\n' +
+        `  Based on the last two monthly ${adjFitHeader} data from <a href="${csvUrl}">Keeling et al.</a>\n` +
+        '  <sub>&nbsp;</sub><br>\n' +
         '  Further information on changes in atmospheric CO<sub>2</sub> concentration in this\n' +
-        '  <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/history.html">NOAA visualization</a>.<br>' +
-        '  Made for Pivotal hack day 2019.\n' +
+        '  <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/history.html">NOAA visualization</a>.<br>\n' +
+        '  Made for Pivotal hack day 2019 and hosted on <a href="https://run.pivotal.io">Pivotal Web Services</a>.\n' +
         '</div>\n' +
         '</body>\n' +
         '</html>'
