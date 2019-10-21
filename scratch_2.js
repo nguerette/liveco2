@@ -52,16 +52,15 @@ const newApp = port => createSimpleServer(port, ({response}) => new Promise(reso
         '  <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAMFBMVEX///9qCAhXCQlJBwdqCQlKBgZEAgJbAAB9AgJ3HR2tCQm8CwvEDAzpDg7xEhIYFxcuz4idAAAAEHRSTlMAAQQYbrX1+/v6+/n79vv6T3NiHwAAAHlJREFUeAEFwUFSAzEQBDC17ZDaA///aaBIdhopAEm0FUBW0M4BK3LpvOvATr62svM+rORhtpTJyUoOmpZmrVxP+HQanFzJzS2yx853+DzwG9o5xfq5aNGeUhsXr3a2Vd1/B6/pOG1549XeyFoJOjqwC21nCmCtFQD/0PRFO+prkvUAAAAASUVORK5CYII=" />\n' +
         '  <title>Live Atmospheric CO2 Concentration Annualized Average Estimate</title>\n' +
         '  <style type="text/css">\n' +
-        '    p:first-of-type {\n' +
+        '    main {\n' +
         '      position: absolute;\n' +
-        '      margin: 0;\n' +
         '      width: 100%;\n' +
         '      text-align: center;\n' +
         '      top: 50%;\n' +
         '      transform: translateY(-50%);\n' +
         '      font-size: 144px;\n' +
         '    }\n' +
-        '    p:last-of-type {\n' +
+        '    footer {\n' +
         '      position: absolute;\n' +
         '      left: 0;\n' +
         '      bottom: 0;\n' +
@@ -70,19 +69,19 @@ const newApp = port => createSimpleServer(port, ({response}) => new Promise(reso
         '  <script type="text/javascript">\n' +
         '    setInterval(function() {\n' +
         '      let value = ' + currentValueGetterExpression + ';\n' +
-        '      document.getElementsByTagName("p")[0].innerText = value + " ppm";\n' +
+        '      document.getElementsByTagName("main")[0].innerText = value + " ppm";\n' +
         '    }, 197);\n' +
         '  </script>\n' +
         '</head>\n' +
         '<body>\n' +
-        '<p>&ndash;</p>\n' +
-        '<p>\n' +
+        '<main>&ndash;</main>\n' +
+        '<footer>\n' +
         `  Based on the last two monthly ${adjFitHeader} data from <a href="${csvUrl}">Keeling et al.</a>\n` +
         '  <sub>&nbsp;</sub><br>\n' +
         '  Further information on changes in atmospheric CO<sub>2</sub> concentration in this\n' +
         '  <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/history.html">NOAA visualization</a>.<br>\n' +
         '  Made for Pivotal hack day 2019 and hosted on <a href="https://run.pivotal.io">Pivotal Web Services</a>.\n' +
-        '</p>\n' +
+        '</footer>\n' +
         '</body>\n' +
         '</html>'
       );
