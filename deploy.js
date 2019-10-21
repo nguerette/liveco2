@@ -4,13 +4,21 @@ const {execFileSync} = require('child_process');
 
 const cf = args => execFileSync('cf', args, {stdio: 'inherit'});
 
-cf([
-  'login',
-  '-a', 'api.run.pivotal.io',
-  '-u', 'nguerette@pivotal.io',
-  '-o', 'labs-playground',
-  '-s', 'Nick Guerette'
-]);
+const api = 'api.run.pivotal.io';
+const user = 'nguerette@pivotal.io';
+const org = 'labs-playground';
+const space = 'Nick Guerette';
+
+const currentTarget = execFileSync('cf', ['target']);
+
+if (
+  !currentTarget.includes(api) ||
+  !currentTarget.includes(user) ||
+  !currentTarget.includes(org) ||
+  !currentTarget.includes(space)
+) {
+  cf(['login', '-a', api, '-u', user, '-o', org, '-s', space]);
+}
 
 cf([
   'push', 'liveco2',
