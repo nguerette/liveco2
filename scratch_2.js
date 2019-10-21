@@ -5,7 +5,8 @@ const createSimpleServer = (port, handler) => http.createServer((request, respon
   const chunks = [];
   request.on('data', chunks.push.bind(chunks));
   request.on('end', () => {
-    handler({request, response, body: chunks.join('')}).then(() => response.end());
+    Promise.resolve(handler({request, response, body: chunks.join('')}))
+      .then(() => response.finished || response.end());
   });
 }).listen(port);
 
@@ -35,14 +36,15 @@ const newApp = port => createSimpleServer(port, ({response}) => new Promise(reso
       const currentValueGetterExpression =
         `Number(((Date.now() - ${lastDate.getTime()}) * ${slope}) + ${lastValue})` +
         '.toLocaleString(undefined, {minimumFractionDigits: 8, maximumFractionDigits: 8})';
-      response.setHeader('content-type', 'text/html; charset=utf-8');
-      response.setHeader('refresh', String(24 * 60 * 60));
-      response.setHeader('cache-control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-      response.setHeader('expires', '0');
-      response.setHeader('pragma', 'no-cache');
-      response.setHeader('surrogate-control', 'no-store');
-      response.setHeader('x-powered-by', 'the folly of man');
-      response.write(
+      response.setHeader('Content-Type', 'text/html; charset=utf-8');
+      response.setHeader('Refresh', String(24 * 60 * 60));
+      response.setHeader('Connection', 'close');
+      response.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+      response.setHeader('Expires', '0');
+      response.setHeader('Pragma', 'no-cache');
+      response.setHeader('Surrogate-Control', 'no-store');
+      response.setHeader('X-Powered-By', 'the folly of man');
+      response.end(
         '<!doctype html>\n' +
         '<html lang=en>\n' +
         '<head>\n' +
