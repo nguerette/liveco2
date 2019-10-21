@@ -52,6 +52,7 @@ const newApp = port => createSimpleServer(port, ({response}) => new Promise(reso
         '  <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAMFBMVEX///9qCAhXCQlJBwdqCQlKBgZEAgJbAAB9AgJ3HR2tCQm8CwvEDAzpDg7xEhIYFxcuz4idAAAAEHRSTlMAAQQYbrX1+/v6+/n79vv6T3NiHwAAAHlJREFUeAEFwUFSAzEQBDC17ZDaA///aaBIdhopAEm0FUBW0M4BK3LpvOvATr62svM+rORhtpTJyUoOmpZmrVxP+HQanFzJzS2yx853+DzwG9o5xfq5aNGeUhsXr3a2Vd1/B6/pOG1549XeyFoJOjqwC21nCmCtFQD/0PRFO+prkvUAAAAASUVORK5CYII=" />\n' +
         '  <title>Live Atmospheric CO2 Concentration Annualized Average Estimate</title>\n' +
         '  <style type="text/css">\n' +
+        '    body {margin: 0;}\n' +
         '    main {\n' +
         '      position: absolute;\n' +
         '      width: 100%;\n' +
