@@ -82,6 +82,7 @@ const newApp = port => createSimpleServer(port, ({response}) => new Promise(reso
         '  Further information on changes in atmospheric CO<sub>2</sub> concentration in this\n' +
         '  <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/history.html">NOAA visualization</a>.<br>\n' +
         '  Made for Pivotal hack day 2019 and hosted on <a href="https://run.pivotal.io">Pivotal Web Services</a>.\n' +
+        '  <a href="https://github.com/nguerette/liveco2">Source code</a>\n' +
         '</footer>\n' +
         '</body>\n' +
         '</html>'
