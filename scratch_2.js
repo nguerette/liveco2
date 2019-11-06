@@ -1,4 +1,5 @@
 const http = require('http');
+const https = require('https');
 const readline = require('readline');
 
 const createSimpleServer = (port, handler) => http.createServer((request, response) => {
@@ -10,12 +11,12 @@ const createSimpleServer = (port, handler) => http.createServer((request, respon
   });
 }).listen(port);
 
-const csvUrl = 'http://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/in_situ_co2/monthly/monthly_in_situ_co2_mlo.csv';
+const csvUrl = 'https://library.ucsd.edu/dc/object/bb3859642r/_1.csv/download';
 const excelHeader = 'Excel';
 const adjFitHeader = 'adjusted fit';
 
 const newApp = port => createSimpleServer(port, ({response}) => new Promise(resolve => {
-  http.get(csvUrl, input => {
+  (csvUrl.startsWith('https') ? https : http).get(csvUrl, input => {
     let excelDateCol, adjFitCol, lastDate, lastValue, secondLastDate, secondLastValue;
     readline.createInterface({input}).on('line', csvLine => {
       let excelDate, adjFitValue;
@@ -78,6 +79,8 @@ const newApp = port => createSimpleServer(port, ({response}) => new Promise(reso
         '<main>&ndash;</main>\n' +
         '<footer>\n' +
         `  Based on the last two monthly ${adjFitHeader} data from <a href="${csvUrl}">Keeling et al.</a>\n` +
+        '  <sub>&nbsp;</sub><br>\n' +
+        `  Most recent ${adjFitHeader} point dated ${lastDate}\n` +
         '  <sub>&nbsp;</sub><br>\n' +
         '  Further information on changes in atmospheric CO<sub>2</sub> concentration in this\n' +
         '  <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/history.html">NOAA visualization</a>.<br>\n' +
