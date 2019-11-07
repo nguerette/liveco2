@@ -11,7 +11,7 @@ const createSimpleServer = (port, handler) => http.createServer((request, respon
   });
 }).listen(port);
 
-const csvUrl = 'https://library.ucsd.edu/dc/object/bb3859642r/_1.csv/download';
+const csvUrl = 'https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/in_situ_co2/monthly/monthly_in_situ_co2_mlo.csv';
 const excelHeader = 'Excel';
 const adjFitHeader = 'adjusted fit';
 
